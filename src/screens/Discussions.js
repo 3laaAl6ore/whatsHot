@@ -15,6 +15,7 @@ const Discussions = (props) => {
   const [allData, setAllData] = useState({});
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState(props.route.params.username);
+  const [EX, setEx] = useState();
 
   useEffect(() => {
     loadAllDiscussions();
@@ -26,6 +27,7 @@ const Discussions = (props) => {
       method: "get",
     });
     const discussions = await data.json();
+    discussions.Disccusions.reverse();
     setAllData(discussions);
     setLoading(false);
   };
@@ -35,7 +37,7 @@ const Discussions = (props) => {
       {loading ? (
         <ActivityIndicator color="#F7567C" size="large" />
       ) : (
-        <View style={{ flex:1 }}>
+        <View style={{ flex: 1 }}>
           <FlatList
             data={allData.Disccusions}
             keyExtractor={(item) => item._id}
@@ -79,7 +81,6 @@ const Discussions = (props) => {
                     width: "20%",
                     marginLeft: 12,
                     alignItems: "flex-end",
-                  
                   }}
                 >
                   <Text style={styles.postContent}>
@@ -109,30 +110,46 @@ const Discussions = (props) => {
           />
         </View>
       )}
-      <View style={{ backgroundColor:"#5D576B"}}>
+      <View style={{ backgroundColor: "#5D576B" }}>
         <TouchableOpacity
-        style={{
-          alignSelf: "center",
-          width: "80%",
-          alignItems: "center",
-          padding: 22,
-          opacity: 0.8,
-          borderTopLeftRadius: 20,
-          borderBottomEndRadius: 20,
-          marginBottom:12,
-          backgroundColor:"#89f",
-          marginTop: 12,
-        }}
-        onPress={() =>
-          props.navigation.navigate("AddNew", { author: username })
-        }
-      >
-        <Text style={styles.add}>Add New Discussion</Text>
-      </TouchableOpacity>
-        </View>
-
-
-          </View>
+          style={{
+            alignSelf: "center",
+            width: "80%",
+            alignItems: "center",
+            padding: 22,
+            opacity: 0.8,
+            borderTopLeftRadius: 20,
+            borderBottomEndRadius: 20,
+            marginBottom: 12,
+            backgroundColor: "#89f",
+            marginTop: 12,
+          }}
+          onPress={() =>
+            props.navigation.navigate("AddNew", { author: username })
+          }
+        >
+          <Text style={styles.add}>Add New Discussion</Text>
+        </TouchableOpacity>
+        {/* 
+        <TouchableOpacity
+          style={{
+            alignSelf: "center",
+            width: "80%",
+            alignItems: "center",
+            padding: 22,
+            opacity: 0.8,
+            borderTopLeftRadius: 20,
+            borderBottomEndRadius: 20,
+            marginBottom: 12,
+            backgroundColor: "#89f",
+            marginTop: 12,
+          }}
+          onPress={() => SorteData()}
+        >
+          <Text style={styles.add}>Add New </Text>
+        </TouchableOpacity> */}
+      </View>
+    </View>
   );
 };
 
