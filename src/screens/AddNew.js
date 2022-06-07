@@ -77,7 +77,9 @@ const AddNew = (props) => {
         }),
       });
       const response = await newDis.json();
+      console.log("-------------in add--------------"); //629e6f6433ce36998db3a445
       console.log(response);
+      console.log("-------------in add--------------");
       if (response.status) {
         console.log(response);
         setIsLoding(false);
@@ -168,17 +170,21 @@ const AddNew = (props) => {
         onChangeText={(text) => setContent(text)}
       />
 
-      <TouchableOpacity
-        style={{
-          padding: 20,
-          width: "45%",
-          alignItems: "center",
-          backgroundColor: "#dcf",
-        }}
-        onPress={() => MakeItHot()}
-      >
-        <Text>make it hot </Text>
-      </TouchableOpacity>
+      {isLoding ? (
+        <ActivityIndicator color="green" size={"large"} />
+      ) : (
+        <TouchableOpacity
+          style={{
+            padding: 20,
+            width: "45%",
+            alignItems: "center",
+            backgroundColor: "#dcf",
+          }}
+          onPress={() => MakeItHot()}
+        >
+          <Text>make it hot </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
