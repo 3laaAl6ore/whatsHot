@@ -25,9 +25,7 @@ const DiscussionDetails = (props) => {
   const [like, setLike] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log("-------------in des detalis screen --------------------");
-  console.log(props);
-  console.log("-------------out des detalis screen --------------------");
+
   const sendComment = async () => {
     if (comment != "" && poster != "") {
       const data = await fetch(baseURL + "/dis/comment/" + item._id, {

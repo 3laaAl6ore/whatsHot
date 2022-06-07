@@ -1,143 +1,102 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Image,
   ActivityIndicator,
   FlatList,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
-import moment from "moment";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { baseURL } from "../utility/consts";
 import { styles } from "../utility/DiscussionsStyle.js";
+import MostRecent from "../components/MostRecent.js";
+import Hoter from "../components/Hoter.js";
+import Oldest from "../components/Oldest.js";
+
+import { useDispatch, useSelector } from "react-redux";
+import * as disActions from "../../store/GetAllDataAction";
+
 const Discussions = (props) => {
-  console.log("-------------in des screen --------------------");
-  console.log(props);
-  console.log("-------------out des screen --------------------");
-  const [allData, setAllData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [allData, setAllData] = useState(null);
+  const [loading, setIsLoading] = useState(false);
   const [username, setUsername] = useState(props.route.params.username);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    loadAllDiscussions();
-  }, []);
-
-  const loadAllDiscussions = async () => {
-    setLoading(true);
-    const data = await fetch(baseURL + "/dis/getAllDisccusions", {
-      method: "get",
-    });
-    const discussions = await data.json();
-    discussions.Disccusions.reverse();
-    setAllData(discussions);
-    setLoading(false);
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
   };
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getAllData();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  ///------------//
+  const dispatch = useDispatch();
+
+  const getAllData = useCallback(async () => {
+    let action = disActions.get_disccusion_action();
+    setIsLoading(true);
+    try {
+      await dispatch(action);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+    }
+  }, [setIsLoading, dispatch, disActions.get_disccusion_action]);
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+
+  //const allDisccusions = useSelector((state) => state.allData);
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       {loading ? (
         <ActivityIndicator color="#F7567C" size="large" />
       ) : (
-        <View style={{ flex: 1 }}>
-          <FlatList
-            data={allData.Disccusions}
-            keyExtractor={(item) => item._id}
-            
-            renderItem={(itemRow) => (
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.navigate("DiscussionDetails", {
-                    discussion: itemRow.item,
-                    username: username,
-                  });
+        <View style={{ width: "100%", height: "100%" }}>
+          <Text style={styles.category}> Most Recent </Text>
+          <MostRecent username={username}  navigation={props.navigation}/>
+
+          <Text style={styles.category}> Most Hot </Text>
+            <Hoter  username={username} navigation={props.navigation} /> 
+
+            <Text style={styles.category}> Most old </Text>
+            <Oldest  username={username} navigation={props.navigation} /> 
+
+
+          <View style={{ shadowColor: "black", shadowOpacity: 0.3 }}>
+            <TouchableOpacity
+              style={styles.btnAdd}
+              onPress={() =>
+                props.navigation.navigate("AddNew", { author: username })
+              }
+            >
+              <Text style={styles.add}>Add New Discussion |</Text>
+              <MaterialCommunityIcons
+                raised
+                name="plus-box-outline"
+                size={30}
+                color="#8aa"
+                style={{
+                  marginLeft: 2,
                 }}
-                style={styles.row}
-              >
-                {itemRow.item.postImage ? (
-                  <Image
-                    source={{ uri: itemRow.item.postImage }}
-                    style={styles.postImage}
-                  />
-                ) : (
-                  <Image
-                    source={{ uri: itemRow.item.authorAvatar }}
-                    style={styles.avatar}
-                  />
-                )}
-                <View style={{ width: "50%", marginLeft: 10 }}>
-                  <Text style={styles.postTitle}>
-                    {itemRow.item.title.length > 15
-                      ? itemRow.item.title.substring(0, 15) + "..."
-                      : itemRow.item.title}{" "}
-                    | {itemRow.item.author}
-                  </Text>
-                  <Text style={styles.postContent}>
-                    {itemRow.item.content.length > 15
-                      ? itemRow.item.content.substring(0, 15) + "..."
-                      : itemRow.item.content}{" "}
-                    | {moment(itemRow.item.Date).format("DD/MM/yyyy")}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: "20%",
-                    marginLeft: 12,
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <Text style={styles.postContent}>
-                    <MaterialCommunityIcons
-                      raised
-                      name="comment"
-                      size={18}
-                      color="skyblue"
-                      // onPress={() => console.log("ss")}
-                    />{" "}
-                    {itemRow.item.comments.length}
-                  </Text>
-
-                  <Text style={styles.postContent}>
-                    <MaterialCommunityIcons
-                      raised
-                      name="heart"
-                      size={18}
-                      color="red"
-                      // onPress={() => console.log("ss")}
-                    />{" "}
-                    {itemRow.item.likes.length}
-                  </Text>
-
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       )}
-      <View style={{ backgroundColor: "#5D576B" }}>
-        <TouchableOpacity
-          style={{
-            alignSelf: "center",
-            width: "80%",
-            alignItems: "center",
-            padding: 22,
-            opacity: 0.8,
-            borderTopLeftRadius: 20,
-            borderBottomEndRadius: 20,
-            marginBottom: 12,
-            backgroundColor: "#89f",
-            marginTop: 12,
-          }}
-          onPress={() =>
-            props.navigation.navigate("AddNew", { author: username })
-          }
-        >
-          <Text style={styles.add}>Add New Discussion</Text>
-        </TouchableOpacity>
-
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

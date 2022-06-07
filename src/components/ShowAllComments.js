@@ -20,8 +20,6 @@ const ShowAllComments = (props) => {
   const [color , setColor] = useState("#88a");
 
   const SendLikeToComment = async(commentItem) => {
-
-   
     const data = await fetch(baseURL + "/dis/likeComment/"+disccusionId+"/"+commentItem._id,{
       method:"put",
       headers:{ 
@@ -29,9 +27,7 @@ const ShowAllComments = (props) => {
       }
     });
     const response = await data.json();
-    console.log("------------------------------------");
-    console.log(response);
-    console.log("---------------------^^^-response------------");
+  //  console.log(response);
   
   }
 

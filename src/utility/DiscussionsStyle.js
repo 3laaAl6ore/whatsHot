@@ -5,10 +5,16 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "300",
   },
+  scrollView:{
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   add: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#8aa",
     borderRadius: 50,
   },
   postContent: {
@@ -16,30 +22,60 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
   },
   postTitle: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 13,
+    fontWeight: "bold",
+    marginBottom:3,
+    marginTop:5
+  //backgroundColor: "red"
   },
-  row: {
-    width: "100%",
-    backgroundColor: "#FCFCFC",
-    flexDirection: "row",
-    borderRadius: 8,
-    padding: 5,
-    marginBottom: 7,
-  },
+
   avatar: {
     width: 46,
     height: 50,
   },
   postImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    marginTop: 3,
+    aspectRatio: 1, 
+    flex: 1, 
+    maxWidth: 300, 
+    resizeMode: 'contain',
   },
   container: {
     flex: 1,
-    backgroundColor: "#5D576B",
+    backgroundColor: "white",
     padding: 5,
+
   },
+  item: {
+    backgroundColor: "white",
+    width: 330,
+    height: "100%",
+    margin: 10,
+    flexDirection: "row",
+    shadowColor:"#5D576B",
+    shadowOpacity: 0.5,
+    borderBottomWidth:3.5,
+    borderBottomColor:"black",
+
+  },
+  btnAdd:{
+    alignSelf: "center",
+    width: "80%",
+    alignItems: "center",
+    padding: 7,
+    borderTopLeftRadius: 20,
+    borderBottomEndRadius: 20,
+    marginBottom: 12,
+    backgroundColor: "white", //"#89f",
+    marginTop: 12,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  category:{
+    fontSize: 15,
+    color: "#5D576B",
+    fontWeight: "bold",
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    marginLeft: 12,
+  }
 });
