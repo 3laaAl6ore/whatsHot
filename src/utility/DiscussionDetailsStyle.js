@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
     },
     comments: {
       fontSize: 15,
-      fontWeight: "200",
-      color: "#ffffff",
+      fontWeight: "700",
+      color: "#ca1",
     },
     sendbtn: {
       width: "100%",
@@ -32,20 +32,20 @@ export const styles = StyleSheet.create({
     postContent: {
       fontSize: 14,
       fontWeight: "300",
-      color: "#ffffff",
+      color: "#ca1",
     },
   
     postContent2: {
-      fontSize: 16,
-      fontWeight: "300",
-      color: "#ffffff",
+      fontSize: 14,
+      fontWeight: "900",
+      color: "#89a",
       marginTop: 12,
       alignSelf: "center",
     },
     postTitle2: {
       fontSize: 16,
       fontWeight: "500",
-      color: "#ffcc00",
+      color: "#18ac",
     },
     avatar: {
       width: 46,
@@ -57,18 +57,18 @@ export const styles = StyleSheet.create({
       marginTop: 20,
       borderBottomWidth: 1,
       borderTopWidth: 1,
-      borderBottomColor: "#ffffff",
-      borderTopColor: "#ffffff",
+      borderBottomColor: "#aa48",
+      borderTopColor: "#48aa",
       width: "100%",
       flexDirection: "row",
     },
     postTitle: {
       fontSize: 30,
       fontWeight: "700",
-      color: "#ffffff",
+      color: "black",
     },
     container: {
       flex: 1,
-      backgroundColor: "#5D576B",
+      backgroundColor: "white",
     },
   });

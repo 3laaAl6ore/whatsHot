@@ -7,6 +7,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  Image,ScrollView
 } from "react-native";
 import { baseURL } from "../utility/consts";
 import * as ImagePicker from "expo-image-picker";
@@ -14,7 +15,6 @@ import { Avatar } from "react-native-elements";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 const AddNew = (props) => {
-  const [dbURL, setdbURL] = useState("");
   const [isLoding, setIsLoding] = useState(false);
   const [SelectedImage, setSelectedImage] = useState(null);
   const [author, setAuthor] = useState(props.route.params.author);
@@ -101,20 +101,28 @@ const AddNew = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {SelectedImage == null ? (
-        <Text
-          style={{
-            fontSize: 21,
-            fontWeight: "bold",
-            color: "#55d",
-            shadowColor: "black",
-            shadowOpacity: 0.25,
-          }}
-        >
-          {" "}
-          Please upload image{" "}
-        </Text>
+        <View style={{alignItems:"center",justifyContent:"center"}}>
+          <Image
+            source={{
+              uri: "https://elimchurch.org.uk/wp-content/uploads/2020/05/dropbox.png",
+            }}
+            style={{width:259,height:155}}
+          />
+          <Text
+            style={{
+              fontSize: 21,
+              fontWeight: "bold",
+              color: "#55d",
+              shadowColor: "black",
+              shadowOpacity: 0.25,
+            }}
+          >
+            {" "}
+            Please upload image{" "}
+          </Text>
+        </View>
       ) : (
         <Avatar
           size={250}
@@ -179,13 +187,14 @@ const AddNew = (props) => {
             width: "45%",
             alignItems: "center",
             backgroundColor: "#dcf",
+            alignSelf: "center"
           }}
           onPress={() => MakeItHot()}
         >
           <Text>make it hot </Text>
         </TouchableOpacity>
       )}
-    </View>
+    </ScrollView>
   );
 };
 export const screenOption = (navData) => {
@@ -198,8 +207,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   body: {
     backgroundColor: "#dcd",

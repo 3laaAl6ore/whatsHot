@@ -1,5 +1,12 @@
-import { Text, View, TouchableOpacity, Image, FlatList } from "react-native";
-import React ,{useEffect}from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Alert,
+} from "react-native";
+import React, { useEffect } from "react";
 import moment from "moment";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { styles } from "../utility/DiscussionsStyle.js";
@@ -10,24 +17,64 @@ const Hoter = (props) => {
   const allDisccusions = useSelector((state) => state.allData);
 
   const data = allDisccusions?.allData?.Disccusions;
-  
-  const sorted = ()=>{
-   return  data?.sort((x, y) => {
-   return x.likes.length + x.comments.length < y.likes.length + y.comments.length;
-  });
-  }
-const sortedData = sorted();
-useEffect(()=>{
-  sorted();
-},[sorted])
 
+  const orderBy = props.by;
+  const author = props.author;
+
+  const sorted = () => {
+    switch (orderBy) {
+      case "H":
+        return data?.sort((x, y) => {
+          return (
+            x.likes.length + x.comments.length <
+            y.likes.length + y.comments.length
+          );
+        });
+      case "O":
+        return data?.sort((x, y) => {
+          return x.Date > y.Date;
+        });
+      case "R":
+        return data?.sort((x, y) => {
+          return x.Date < y.Date;
+        });
+      case "A":
+        const authorDis = data?.filter((x) => {
+          return x.author.toUpperCase() === author.toUpperCase();
+        });
+        if (authorDis.length > 0) return authorDis;
+        else {
+          return data?.sort((x, y) => {
+            return (
+              x.likes.length + x.comments.length <
+              y.likes.length + y.comments.length
+            );
+          });
+        }
+
+      default:
+        break;
+    }
+  };
+
+  const sortedData = sorted();
+
+  useEffect(() => {
+    sorted();
+  }, [sorted]);
+  //console.log("as");
+  //console.log(sortedData);
+  //console.log(author);
   const username = props.username;
   return (
-    <View>
+    <View style={{ width: "100%", height: "100%" }}>
       <FlatList
         data={sortedData}
         keyExtractor={(item) => item._id}
         horizontal
+        refreshing
+        showsHorizontalScrollIndicator={false}
+        onEndReached={() => Alert.alert("you get to the end")}
         renderItem={(itemRow) => (
           <TouchableOpacity
             onPress={() => {
@@ -48,7 +95,7 @@ useEffect(()=>{
                 ) : (
                   <Image
                     source={{ uri: itemRow.item.authorAvatar }}
-                    style={styles.avatar}
+                    style={styles.postImage}
                   />
                 )}
               </View>
@@ -77,16 +124,16 @@ useEffect(()=>{
               </View>
             </View>
 
-            <View style={{ width: "50%", marginLeft: 10 }}>
+            <View style={{ width: "100%", marginLeft: 3 }}>
               <Text style={styles.postTitle}>
-                {itemRow.item.title.length > 15
-                  ? itemRow.item.title.substring(0, 15) + "..."
+                {itemRow.item.title.length > 35
+                  ? itemRow.item.title.substring(0, 34) + "..."
                   : itemRow.item.title}{" "}
                 | {itemRow.item.author}
               </Text>
               <Text style={styles.postContent}>
-                {itemRow.item.content.length > 250
-                  ? itemRow.item.content.substring(0, 249) + "..."
+                {itemRow.item.content.length > 210
+                  ? itemRow.item.content.substring(0, 209) + "..."
                   : itemRow.item.content}{" "}
                 |
               </Text>

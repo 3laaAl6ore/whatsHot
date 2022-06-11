@@ -4,7 +4,7 @@ import { View, Text, TextInput, Alert,
 
 const Login = props => {
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState("hello");
 
     const letstalk = () => {
         if(username != ''){
@@ -26,6 +26,8 @@ const Login = props => {
                 style={styles.input}
                 keyboardType="default"
                 value={username}
+                placeholder="Enter Your Name"
+                placeholderTextColor={"white"}
                 onChangeText={text => setUsername(text)}
             />
             <TouchableOpacity onPress={letstalk} style={styles.btn}>
@@ -41,37 +43,37 @@ const styles = StyleSheet.create({
         marginTop:12,
         alignItems:'center',
         paddingVertical:20,
-        borderRadius:30,
-        backgroundColor:'#F756'
+        borderRadius:15,
+        backgroundColor:'#5D576B'
     },
     context:{
         textAlign:'center',
         fontSize:18,
-        color:'#FCFCFC',
+        color:'#393334',
         fontWeight:'400'
     },
     title:{
         fontSize:28,
-        color:'#FCFCFC',
-        fontWeight:'800'
+        color:'#aacc',
+        fontWeight:'bold'
     },
     btnText:{
         fontSize:18,
-        color:'#FCFCFC',
-        fontWeight:'700'
+        color:'white',
+        fontWeight:'bold'
     },
     input: {
         marginTop:20,
         width:'100%',
         paddingVertical:20,
-        borderRadius:30,
+        borderRadius:10,
         paddingHorizontal:20,
         fontSize:18,
-        backgroundColor:'#FCFCFC'
+        backgroundColor:'#1aa'
     },
     container: {
       flex: 1,
-      backgroundColor: '#5D576B',
+      backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
       padding:30

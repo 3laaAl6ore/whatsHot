@@ -5,11 +5,18 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "300",
   },
-  scrollView:{
+  input: {
+    padding: 20,
+    backgroundColor: "white",
+    width: "100%",
+    shadowColor: "#8aa18a",
+    shadowOpacity: 1,
+  },
+  scrollView: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   add: {
     fontSize: 22,
@@ -24,9 +31,8 @@ export const styles = StyleSheet.create({
   postTitle: {
     fontSize: 13,
     fontWeight: "bold",
-    marginBottom:3,
-    marginTop:5
-  //backgroundColor: "red"
+    marginBottom: 3,
+    marginTop: 5,
   },
 
   avatar: {
@@ -34,31 +40,26 @@ export const styles = StyleSheet.create({
     height: 50,
   },
   postImage: {
-    aspectRatio: 1, 
-    flex: 1, 
-    maxWidth: 300, 
-    resizeMode: 'contain',
+    height: "100%",
+    width: "100%",
+    resizeMode: "contain",
   },
   container: {
     flex: 1,
     backgroundColor: "white",
     padding: 5,
-
   },
   item: {
     backgroundColor: "white",
-    width: 330,
+    width: 356,
     height: "100%",
-    margin: 10,
-    flexDirection: "row",
-    shadowColor:"#5D576B",
-    shadowOpacity: 0.5,
-    borderBottomWidth:3.5,
-    borderBottomColor:"black",
-
+    margin: 5,
+    shadowColor: "#D222",
+    shadowOpacity: 0.2,
+    shadowOffset:{ width: 12, height: -12},
+    paddingVertical: 10,
   },
-  btnAdd:{
-    alignSelf: "center",
+  btnAdd: {
     width: "80%",
     alignItems: "center",
     padding: 7,
@@ -66,16 +67,22 @@ export const styles = StyleSheet.create({
     borderBottomEndRadius: 20,
     marginBottom: 12,
     backgroundColor: "white", //"#89f",
-    marginTop: 12,
     flexDirection: "row",
     justifyContent: "center",
   },
-  category:{
+  category: {
     fontSize: 15,
     color: "#5D576B",
     fontWeight: "bold",
     shadowColor: "black",
     shadowOpacity: 0.3,
     marginLeft: 12,
-  }
+    alignSelf: "flex-start",
+  },
+  txt:{
+    fontSize: 17,
+    color: "#18a",
+    fontWeight: "bold",
+    marginBottom: 10,
+   }
 });

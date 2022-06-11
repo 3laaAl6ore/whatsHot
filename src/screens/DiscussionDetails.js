@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Alert,
+  Alert,KeyboardAvoidingView,Platform
 } from "react-native";
 import moment from "moment";
 import { baseURL } from "../utility/consts";
@@ -14,8 +14,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import ShowAllComments from "../components/ShowAllComments.js";
 import { styles } from "../utility/DiscussionDetailsStyle.js";
 
+
 const DiscussionDetails = (props) => {
   const item = props.route.params.discussion;
+  console.log(item);
   const comments = props.route.params.discussion.comments;
 
   const disccusionId = props.route.params.discussion._id;
@@ -55,10 +57,15 @@ const DiscussionDetails = (props) => {
     });
     const liked = await data.json();
     setLike(true);
-    console.log(JSON.stringify(liked));
+ //   console.log(JSON.stringify(liked));
   };
   return (
     <View style={styles.container}>
+            <KeyboardAvoidingView
+        enabled
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+
+      >
       <View style={{ height: "100%", padding: 1 }}>
         <Text style={styles.postTitle}>{item.title}</Text>
         <View style={styles.author_container}>
@@ -70,7 +77,7 @@ const DiscussionDetails = (props) => {
               <Text style={styles.comments}>
                 {moment(item.Date).format("DD/MM/yyyy")} |
               </Text>
-              <Text style={{ fontSize: 15, color: "white" }}>
+              <Text style={{ fontSize: 15, color: "black" }}>
                 {" "}
                 {item.comments.length}
               </Text>
@@ -78,11 +85,11 @@ const DiscussionDetails = (props) => {
                 raised
                 name="comment"
                 size={25}
-                color="white"
+                color="black"
                 style={{ paddingRight: 25 }}
                 onPress={() => setModalVisible(!modalVisible)}
               />
-              <Text style={{ fontSize: 15, color: "white" }}>
+              <Text style={{ fontSize: 15, color: "black" }}>
                 {item.likes.length}
               </Text>
               <ShowAllComments
@@ -102,7 +109,7 @@ const DiscussionDetails = (props) => {
           </View>
         </View>
         <ScrollView>
-          <Image source={{ uri: item.postImage }} style={styles.postImage} />
+          <Image source={{ uri: item.postImage !==null && item.postImage !=="" ?  item.postImage : item.authorAvatar}} style={styles.postImage} />
           <Text style={styles.postContent2}>{item.content}</Text>
           <View
             style={{
@@ -136,6 +143,8 @@ const DiscussionDetails = (props) => {
           </View>
         </ScrollView>
       </View>
+      </KeyboardAvoidingView>
+
     </View>
   );
 };
